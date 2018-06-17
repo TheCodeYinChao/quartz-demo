@@ -1,0 +1,26 @@
+server:
+  port: 80
+
+dbServer:
+  default: localhost:3306
+datasource:
+  default:
+    type: mysql
+    pool-name: default
+    continue-on-error: false
+    jdbc-url: jdbc:mysql://${dbServer.default}/quartz?useSSL=true&verifyServerCertificate=false&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    connection-timeout: 30000
+    connection-test-query: SELECT 1
+    maximum-pool-size: 5
+    minimum-idle: 2
+    idle-timeout: 600000
+    destroy-method: shutdown
+    auto-commit: false
+
+# 配置文件名称，内部加载使用
+config:
+  quartz-file-name: quartz.properties
+  redis-file-name: redis.yml
+  db-file-name: datasource.yml

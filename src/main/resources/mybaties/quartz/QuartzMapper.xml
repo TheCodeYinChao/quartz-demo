@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.quartz.dao.QuartzMapper">
+<!--<select id="selectUserCouponCount" resultType="java.util.HashMap">
+    SELECT
+        cu.coupon_id AS couponId,
+        COUNT(cu.coupon_id) AS couponCount
+    FROM coupon_users AS cu
+    WHERE
+         cu.coupon_id
+    <foreach collection="ids" item="id" open="IN (" close=")" separator=",">
+      #{id}
+    </foreach>
+     AND cu.user_id = #{userId}
+    GROUP BY cu.coupon_id
+</select>-->
+
+</mapper>
