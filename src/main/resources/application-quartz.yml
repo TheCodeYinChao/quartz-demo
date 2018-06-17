@@ -1,0 +1,29 @@
+# Configure Main Scheduler Properties
+org:
+  quartz:
+    scheduler:
+      instanceName: ScheduleJob
+      instanceId: AUTO
+      skipUpdateCheck: true
+      startupDelay: 10
+# Configure ThreadPool
+    threadPool:
+      class: org.quartz.simpl.SimpleThreadPool
+      threadCount: 2
+      threadPriority: 5
+# Configure JobStore
+    jobStore:
+      misfireThreshold: 60000
+      class: org.quartz.impl.jdbcjobstore.JobStoreCMT
+      driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      useProperties: true
+      tablePrefix: QRTZ_
+      isClustered: true
+      clusterCheckinInterval: 20000
+    # Configure Plugins
+    plugin:
+      triggHistory:
+        class: org.quartz.plugins.history.LoggingJobHistoryPlugin
+      shutdownHook:
+        class: org.quartz.plugins.management.ShutdownHookPlugin
+        cleanShutdown: true

@@ -19,8 +19,13 @@ datasource:
     destroy-method: shutdown
     auto-commit: false
 
+
 # 配置文件名称，内部加载使用
 config:
   quartz-file-name: quartz.properties
   redis-file-name: redis.yml
   db-file-name: datasource.yml
+  quartz-file: application-quartz.yml
+spring:
+  profiles:
+    active: quartz

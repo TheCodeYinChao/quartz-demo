@@ -1,5 +1,6 @@
 package cn.quartz.config;
 
+import org.aspectj.apache.bcel.util.ClassPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,15 +52,6 @@ public class QuartzConfig {
         schedulerFactoryBean.setQuartzProperties(externalPathConfig.quartzCfg());
 
         schedulerFactoryBean.setAutoStartup(true);
-
-        Properties pps = new Properties();
-        try {
-            String path = this.getClass().getClassLoader().getResource("config/quartz.properties").getPath();
-            pps.load(new FileInputStream(new File(path)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        schedulerFactoryBean.setQuartzProperties(pps);
         // 覆盖已存在定时任务
         schedulerFactoryBean.setOverwriteExistingJobs(true);
         schedulerFactoryBean.setWaitForJobsToCompleteOnShutdown(false);

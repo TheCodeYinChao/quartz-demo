@@ -24,6 +24,9 @@ public class ExternalPathConfig {
     @Value("${config.quartz-file-name}")
     private String quartzConfigFileName;
 
+    @Value("${config.quartz-file}")
+    private String quartzFileName;
+
     @Value("${config.redis-file-name}")
     private String redisConfigFileName;
 
@@ -34,12 +37,15 @@ public class ExternalPathConfig {
     private ConfigurableEnvironment environment;
 
     @Bean
-    public Map<String,Map<String,String>> externalProperties(){
+    public Map<String,Map<String,Object>> externalProperties(){
         MutablePropertySources mutablePropertySources = environment.getPropertySources();
-        Map<String,Map<String,String>> result = Maps.newHashMap();
+        Map<String,Map<String,Object>> result = Maps.newHashMap();
         mutablePropertySources.forEach(mps -> {
             String pathName = mps.getName();
             String keyName = null;
+            if(pathName.contains(quartzFileName)){
+                keyName = quartzFileName;
+            }
             if (pathName.contains(quartzConfigFileName)) {
                 keyName = quartzConfigFileName;
             } else if(pathName.contains(dbConfigFileName)) {
@@ -49,7 +55,7 @@ public class ExternalPathConfig {
             }
 
             if (Objects.nonNull(keyName)) {
-                result.put(keyName,(Map<String, String>) mps.getSource());
+                result.put(keyName,(Map<String, Object>) mps.getSource());
             }
         });
         return result;
@@ -57,11 +63,11 @@ public class ExternalPathConfig {
 
     @Bean
     public Properties quartzCfg(){
-        Map<String,String> map = externalProperties().get(quartzConfigFileName);
+        Map<String,Object> map = externalProperties().get(quartzFileName);
         final Properties prop = new Properties();
-        if (Objects.nonNull(map)) {
-            map.forEach((k,v) -> prop.setProperty(k,v));
-        }
+        map.forEach((k,v)->{
+            prop.setProperty(k, v.toString());
+        });
         return prop;
     }
 }
