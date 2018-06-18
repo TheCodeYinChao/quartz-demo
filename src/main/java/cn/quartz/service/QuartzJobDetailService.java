@@ -1,9 +1,12 @@
 package cn.quartz.service;
 
+import cn.quartz.schedule.listener.TestJobListener;
+import cn.quartz.schedule.listener.TestTriggerListener;
 import cn.quartz.vo.job.JobDetailDO;
 import com.google.common.collect.Lists;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.quartz.impl.matchers.KeyMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,6 +93,19 @@ public class QuartzJobDetailService implements DefaultDataSourceService {
 
         // 如果已经存在 则替换
         try {
+            Matcher matcher = KeyMatcher.keyEquals(jobDetail.getKey());   //根据name和group 匹配一个job实例
+            /**
+             * 添加监听器
+             */
+            JobListener listener = new TestJobListener();
+            scheduler.getListenerManager().addJobListener(listener, matcher);
+            /**
+             * 添加一个触发监听器
+             */
+            TriggerListener triggerListener = new TestTriggerListener();
+            scheduler.getListenerManager().addTriggerListener(triggerListener,matcher);
+
+
             scheduler.scheduleJob(jobDetail,triggerSet,true);
             return true;
         } catch (SchedulerException e) {

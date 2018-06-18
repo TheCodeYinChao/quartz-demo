@@ -19,7 +19,9 @@ org:
       useProperties: true
       tablePrefix: QRTZ_
       isClustered: true
+      #集群检查间隔时间20s 默认15s
       clusterCheckinInterval: 20000
+
     # Configure Plugins
     plugin:
       triggHistory:
