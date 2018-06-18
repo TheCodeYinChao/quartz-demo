@@ -46,6 +46,7 @@ public class ExternalPathConfig {
             if(pathName.contains(quartzFileName)){
                 keyName = quartzFileName;
             }
+
             if (pathName.contains(quartzConfigFileName)) {
                 keyName = quartzConfigFileName;
             } else if(pathName.contains(dbConfigFileName)) {

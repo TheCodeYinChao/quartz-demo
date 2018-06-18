@@ -1,5 +1,6 @@
 package cn.quartz.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.apache.bcel.util.ClassPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +25,8 @@ import java.util.Properties;
  * @since: 2016-6-2 20:09
  */
 @Configuration
+@Slf4j
 public class QuartzConfig {
-    private static final Logger log = LoggerFactory.getLogger(QuartzConfig.class);
 
     @Autowired
     private ExternalPathConfig externalPathConfig;
@@ -49,11 +50,12 @@ public class QuartzConfig {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         schedulerFactoryBean.setDataSource(dataSource);
         schedulerFactoryBean.setTransactionManager(platformTransactionManager);
+        //配置定时器相关参数
         schedulerFactoryBean.setQuartzProperties(externalPathConfig.quartzCfg());
-
         schedulerFactoryBean.setAutoStartup(true);
         // 覆盖已存在定时任务
         schedulerFactoryBean.setOverwriteExistingJobs(true);
+        //是否等待当前任务执行完成之后再停止
         schedulerFactoryBean.setWaitForJobsToCompleteOnShutdown(false);
 
         schedulerFactoryBean.setJobFactory(autowiringQuartzJobFactory);

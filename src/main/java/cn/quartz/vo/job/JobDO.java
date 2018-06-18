@@ -3,6 +3,7 @@ package cn.quartz.vo.job;
 import cn.quartz.common.AppConst;
 import cn.quartz.schedule.TestQuartz;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -20,8 +21,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author: lvhao
  * @since: 2016-6-23 20:59
  */
+@Slf4j
 public class JobDO {
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(JobDO.class);
     private static final Map<String,Class<? extends Job>> SUPPORTED_JOB_TYPES =
             new HashMap<String,Class<? extends Job>>(){
         {
